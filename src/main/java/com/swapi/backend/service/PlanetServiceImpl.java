@@ -1,5 +1,7 @@
 package com.swapi.backend.service;
 
+import java.util.Optional;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +21,22 @@ public class PlanetServiceImpl implements PlanetService {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public Planet findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Planet> findById(String id) {
+		return repository.findById(id);
 	}
 
 	@Override
-	public Page<Planet> findAll(String name, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Planet> findAllByName(String name, Pageable pageable) {
+		return repository.findByNameContaining(name, pageable);
 	}
 
 	@Override
 	public Page<Planet> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll(pageable);
 	}
 
 	@Override
 	public void save(Planet planet) {
-		// TODO Auto-generated method stub
 		logger.info("Saving planet");
 
 		repository.save(planet);

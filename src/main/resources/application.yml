@@ -2,3 +2,12 @@ server:
   servlet:
     context-path: /swapi
   port: 8080
+  
+  spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: api
+      password: password
+      database: api

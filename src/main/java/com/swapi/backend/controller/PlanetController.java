@@ -1,5 +1,7 @@
 package com.swapi.backend.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,15 +29,14 @@ public class PlanetController {
 	public ResponseEntity<Planet> findById(@PathVariable("id") String id) {
 
 		try {
-			Planet planet = null;
-			planet = service.findById(id);
+			Optional<Planet> planet = service.findById(id);
 
-			if (planet == null) {
-				return new ResponseEntity<>(planet, HttpStatus.NO_CONTENT);
+			if (planet.isPresent()) {
+				return new ResponseEntity<>(planet.get(), HttpStatus.NO_CONTENT);
 			}
 
 			else {
-				return new ResponseEntity<>(planet, HttpStatus.OK);
+				return new ResponseEntity<>(planet.get(), HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,7 +48,7 @@ public class PlanetController {
 
 		try {
 			Page<Planet> planets = null;
-			planets = service.findAll(name, pageable);
+			planets = service.findAllByName(name, pageable);
 
 			if (planets == null) {
 				return new ResponseEntity<>(planets, HttpStatus.NO_CONTENT);
@@ -87,7 +88,7 @@ public class PlanetController {
 			service.save(planet);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -98,7 +99,7 @@ public class PlanetController {
 			service.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

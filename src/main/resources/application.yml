@@ -1,0 +1,4 @@
+server:
+  servlet:
+    context-path: /swapi
+  port: 8080

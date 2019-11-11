@@ -11,3 +11,7 @@ server:
       username: api
       password: password
       database: api
+      
+feign:
+  hystrix:
+    enabled: false

@@ -32,37 +32,18 @@ public class PlanetController {
 			Optional<Planet> planet = service.findById(id);
 
 			if (planet.isPresent()) {
-				return new ResponseEntity<>(planet.get(), HttpStatus.NO_CONTENT);
-			}
-
-			else {
 				return new ResponseEntity<>(planet.get(), HttpStatus.OK);
 			}
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@GetMapping(value = "/{name}")
-	public ResponseEntity<Page<Planet>> findAllByName(@PathVariable("name") String name, Pageable pageable) {
-
-		try {
-			Page<Planet> planets = null;
-			planets = service.findAllByName(name, pageable);
-
-			if (planets == null) {
-				return new ResponseEntity<>(planets, HttpStatus.NO_CONTENT);
-			}
 
 			else {
-				return new ResponseEntity<>(planets, HttpStatus.OK);
+				return new ResponseEntity<>(planet.get(), HttpStatus.NO_CONTENT);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping(value = "/all")
+	@GetMapping(value = "/")
 	public ResponseEntity<Page<Planet>> findAll(Pageable pageable) {
 
 		try {
@@ -86,7 +67,7 @@ public class PlanetController {
 	public ResponseEntity<?> save(@RequestBody Planet planet) {
 		try {
 			service.save(planet);
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(planet, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

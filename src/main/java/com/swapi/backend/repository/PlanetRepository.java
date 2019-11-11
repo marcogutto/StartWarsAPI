@@ -9,7 +9,7 @@ import com.swapi.backend.domain.Planet;
 
 @Repository
 public interface PlanetRepository extends MongoRepository<Planet, String> {
-	
+
 	public Page<Planet> findByNameContaining(String name, Pageable pageable);
 
 }
